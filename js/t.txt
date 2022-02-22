@@ -1,0 +1,69 @@
+
+
+let jump = document.querySelector("button");
+let bccolor = document.body;
+let ghost = document.querySelector("div.ghost");
+let ghostSvg = document.querySelector("div.ghost svg");
+
+function obThings(ob) {
+    // let ob = document.querySelector("div.obstacle");
+    let mover = 1;
+   
+
+    function moveObs() {
+
+        ob.style.transform = "translateX(-" + mover + "px) rotate(-90deg)";
+        mover += 3;
+        
+        
+        if (mover > 600) {
+            ob.remove();
+            setTimeout(makeObs, 2000);
+            mover = 0;
+            clearInterval(auto);
+        }
+    }
+    let auto = setInterval(moveObs, 1);
+
+}
+
+
+function isSpace(e) {
+
+    if (e.code == "Space") {
+        ghost.style.animation = "jump .5s forwards";
+        setTimeout(removeAnime, 400);
+    }
+    function removeAnime() {
+        ghost.style.animation = "none";
+    }
+}
+
+
+let spear = {
+    name: "spear",
+    speed: 3
+    // info: ""
+}
+
+
+
+function makeObs() {
+
+    let div = document.createElement("div");
+    div.classList.add("obstacle");
+    document.querySelector("section.mainRoad").appendChild(div);
+    let ob = document.querySelector("div.obstacle")
+    obThings(ob);
+    obRect = ob.getBoundingClientRect();
+    let x = obRect.left;
+    let y = obRect.top;
+    console.log(x);
+    console.log(y);
+    
+    
+}
+
+
+setTimeout(makeObs, 2000);
+window.addEventListener("keypress", isSpace);
